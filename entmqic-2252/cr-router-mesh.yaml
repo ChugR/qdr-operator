@@ -1,0 +1,20 @@
+# section 3.1
+
+apiVersion: interconnectedcloud.github.io/v1alpha1
+kind: Interconnect
+metadata:
+  name: router-mesh
+spec:
+  deploymentPlan:
+    role: interior
+    size: 3
+    placement: Any
+spec:
+   listener:
+     name: subversion
+     host: 0.0.0.0
+     port: 8081
+     role: normal
+     http: true
+     authenticatePeer: false
+

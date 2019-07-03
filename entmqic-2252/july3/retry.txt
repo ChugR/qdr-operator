@@ -1,0 +1,61 @@
+> oc get pods
+NAME                            READY     STATUS    RESTARTS   AGE
+qdr-operator-54b4cf9fdc-mrthk   1/1       Running   0          2m
+router-mesh-5c44d6899c-vkssr    1/1       Running   0          12s
+router-mesh-5c44d6899c-wf6jg    1/1       Running   0          12s
+router-mesh-5c44d6899c-xfqh2    1/1       Running   0          12s
+
+
+=====
+router-mesh-5c44d6899c-vkssr
+=====
+ip: 172.17.0.12
+
+config:
+router {    mode: interior    id: ${HOSTNAME}}
+listener {    host: 0.0.0.0    port: 5672    role: normal}
+listener {    host: 0.0.0.0    port: 8080    role: normal    http: true    authenticatePeer: true}
+listener {    name: health-and-stats    port: 8888    http: true    healthz: true    metrics: true    websockets: false    httpRootDir: invalid}
+listener {    role: inter-router    host: 0.0.0.0    port: 55672}
+listener {    role: edge    host: 0.0.0.0    port: 45672}
+
+logs:
+    Accepted connection to 0.0.0.0:55672 from 172.17.0.10:33642
+    Accepted connection to 0.0.0.0:55672 from 172.17.0.9:37412
+
+=====
+router-mesh-5c44d6899c-wf6jg
+=====
+ip: 172.17.0.10
+
+config:
+router {    mode: interior    id: ${HOSTNAME}}
+listener {    host: 0.0.0.0    port: 5672    role: normal}
+listener {    host: 0.0.0.0    port: 8080    role: normal    http: true    authenticatePeer: true}
+listener {    name: health-and-stats    port: 8888    http: true    healthz: true    metrics: true    websockets: false    httpRootDir: invalid}
+listener {    role: inter-router    host: 0.0.0.0    port: 55672}
+listener {    role: edge    host: 0.0.0.0    port: 45672}
+
+logs:
+    Accepted connection to 0.0.0.0:55672 from 172.17.0.9:40976
+    Connection Opened: dir=out host=172.17.0.12:55672
+    
+=====
+router-mesh-5c44d6899c-xfqh2
+=====
+ip: 172.17.0.9
+
+config:
+router {    mode: interior    id: ${HOSTNAME}}
+listener {    host: 0.0.0.0    port: 5672    role: normal}
+listener {    host: 0.0.0.0    port: 8080    role: normal    http: true    authenticatePeer: true}
+listener {    name: health-and-stats    port: 8888    http: true    healthz: true    metrics: true    websockets: false    httpRootDir: invalid}
+listener {    role: inter-router    host: 0.0.0.0    port: 55672}
+listener {    role: edge    host: 0.0.0.0    port: 45672}
+
+logs:
+    Connection Opened: dir=out host=172.17.0.10:55672
+    Connection Opened: dir=out host=172.17.0.12:55672 
+
+
+and this works.

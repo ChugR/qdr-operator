@@ -1,0 +1,12 @@
+# section 3.1
+
+apiVersion: interconnectedcloud.github.io/v1alpha1
+kind: Interconnect
+metadata:
+  name: router-mesh
+spec:
+  deploymentPlan:
+    role: interior
+    size: 3
+    placement: Any
+

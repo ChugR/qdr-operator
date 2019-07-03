@@ -1,0 +1,79 @@
+Started cluster July 2. Did cluster down overnight and cluster up.
+
+> oc get pods
+NAME                            READY     STATUS    RESTARTS   AGE
+edge-routers-gvn96              1/1       Running   0          20h
+qdr-operator-54b4cf9fdc-9fzts   1/1       Running   1          20h
+router-mesh-578bbdc484-s7hzh    1/1       Running   0          18h
+router-mesh-578bbdc484-x89zr    1/1       Running   0          18h
+router-mesh-578bbdc484-xh97s    1/1       Running   0          18h
+
+
+=====
+router-mesh-578bbdc484-s7hzh
+=====
+ip: 172.17.0.8
+
+config:
+    router   {mode: interior    id: ${HOSTNAME}}
+    listener {host: 0.0.0.0          port: 8080    role: normal    http: true}
+    listener {name: health-and-stats port: 8888 http: true healthz: true metrics: true websockets: false httpRootDir: invalid}
+    listener {role: inter-router    host: 0.0.0.0    port: 55672}
+    listener {role: edge            host: 0.0.0.0    port: 45672}
+    
+log:
+    No python error at startup
+    Accepted connection to 0.0.0.0:45672 from 172.17.0.12:57152 (edge)
+    Connection to 172.17.0.14:55672 failed (by the 100s; where's the connector in the config?)
+
+=====
+router-mesh-578bbdc484-x89zr
+=====
+ip: 172.17.0.9
+
+config:
+    router {mode: interior    id: ${HOSTNAME}}
+    listener {host: 0.0.0.0    port: 8080    role: normal    http: true}
+    listener {name: health-and-stats port: 8888 http: true healthz: true metrics: true websockets: false httpRootDir: invalid}
+    listener {role: inter-router    host: 0.0.0.0    port: 55672}
+    listener {role: edge            host: 0.0.0.0    port: 45672}
+
+log:
+    ----
+    initial error
+    ----
+    Traceback (most recent call last):
+      File "/home/qdrouterd/bin/auto_mesh.py", line 241, in <module>
+        connectors = query()
+      File "/home/qdrouterd/bin/auto_mesh.py", line 226, in query
+        si = ip_list.index(ip)
+    ValueError: '172.17.0.9' is not in list
+    Error configuring automesh: '172.17.0.9' is not in list
+
+    Then no connections to or from any other routers
+
+=====
+router-mesh-578bbdc484-xh97s
+=====
+ip: 172.17.0.10
+
+config:
+    router {mode: interior    id: ${HOSTNAME}}
+    listener {host: 0.0.0.0    port: 8080    role: normal    http: true}
+    listener {name: health-and-stats port: 8888 http: true healthz: true metrics: true websockets: false httpRootDir: invalid}
+    listener {role: inter-router    host: 0.0.0.0    port: 55672}
+    listener {role: edge            host: 0.0.0.0    port: 45672}
+
+log:
+    ----
+    initial error
+    ----
+    Traceback (most recent call last):
+      File "/home/qdrouterd/bin/auto_mesh.py", line 241, in <module>
+        connectors = query()
+      File "/home/qdrouterd/bin/auto_mesh.py", line 226, in query
+        si = ip_list.index(ip)
+    ValueError: '172.17.0.10' is not in list
+    Error configuring automesh: '172.17.0.10' is not in list
+
+    Then no connections to or from any other routers

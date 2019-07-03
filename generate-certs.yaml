@@ -1,0 +1,22 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: cluster1-inter-router-ca-issuer
+spec:
+  ca:
+    secretName: cluster1-inter-router-tls-ca
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: cluster2-inter-router-tls
+spec:
+  commonName: cluster2-inter-router-default.apps.cluster2.devcluster.openshift.com
+  issuerRef:
+    name: cluster1-inter-router-ca-issuer
+  secretName: cluster2-inter-router-tls
+---
+
+# issuer.certmanager.k8s.io/cluster1-inter-router-ca-issuer created
+# certificate.certmanager.k8s.io/cluster2-inter-router-tls created

@@ -1,0 +1,12 @@
+# 3.2 edge
+apiVersion: interconnectedcloud.github.io/v1alpha1
+kind: Interconnect
+metadata:
+  name: edge-routers
+spec:
+  deploymentPlan:
+    role: edge
+    placement: Every
+  edgeConnectors:
+    - host: router-mesh
+      port: 45672
