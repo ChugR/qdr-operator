@@ -12,8 +12,8 @@ openssl req -x509 -new -nodes -key ${COMMON_NAME}.key \
   -days 3650 -reqexts v3_req -extensions v3_ca \
   -out ${COMMON_NAME}.crt
 
-# Save the key pair as a secret in default namespace
+# Save the key pair as a secret in myproject namespace
 oc create secret tls ${COMMON_NAME}-key-pair \
    --cert=${COMMON_NAME}.crt \
    --key=${COMMON_NAME}.key \
-   --namespace=default
+   --namespace=myproject
