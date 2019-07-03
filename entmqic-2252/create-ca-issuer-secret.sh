@@ -13,7 +13,7 @@ openssl req -x509 -new -nodes -key ${COMMON_NAME}.key \
   -out ${COMMON_NAME}.crt
 
 # Save the key pair as a secret in myproject namespace
-oc create secret tls ${COMMON_NAME}-key-pair \
+oc create secret tls ${COMMON_NAME} \
    --cert=${COMMON_NAME}.crt \
    --key=${COMMON_NAME}.key \
    --namespace=myproject

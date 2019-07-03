@@ -4,7 +4,7 @@ metadata:
   name: cluster1-inter-router-ca-issuer
 spec:
   ca:
-    secretName: cluster1-inter-router-tls-ca-key-pair
+    secretName: cluster1-inter-router-tls-ca
 
 # issuer.certmanager.k8s.io/cluster1-inter-router-ca-issuer created
 #
